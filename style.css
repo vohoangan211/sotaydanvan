@@ -1,0 +1,473 @@
+/* ==========================================================================
+   SỔ TAY ĐẢNG VIÊN ĐIỆN TỬ - STYLESHEET
+   ========================================================================== */
+
+/* 1. KHAI BÁO BIẾN CẤU HÌNH (DESIGN SYSTEM)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Bảng màu chủ đạo */
+  --primary: #be123c;          /* Đỏ đô truyền thống / Đỏ cờ */
+  --primary-hover: #9f1239;    /* Đỏ sẫm khi hover */
+  --primary-light: #fff1f2;    /* Nền đỏ nhạt cho badge, highlight */
+  --primary-border: #fecdd3;
+  
+  --accent: #d97706;           /* Vàng kim điểm nhấn */
+  --accent-light: #fef3c7;
+
+  /* Bảng màu trung tính (Neutral) */
+  --bg-main: #f8fafc;          /* Nền trang */
+  --bg-card: #ffffff;          /* Nền thẻ nội dung */
+  --text-main: #0f172a;        /* Màu chữ chính */
+  --text-muted: #64748b;      /* Màu chữ phụ */
+  --border: #e2e8f0;           /* Đường viền */
+
+  /* Màu trạng thái dữ liệu */
+  --status-not-clean-bg: #fee2e2;
+  --status-not-clean-text: #991b1b;
+  --status-cleaning-bg: #fef3c7;
+  --status-cleaning-text: #92400e;
+  --status-cleaned-bg: #dcfce7;
+  --status-cleaned-text: #166534;
+
+  /* Hiệu ứng & Kích thước */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. RESET & CẤU HÌNH CƠ BẢN
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Tránh bị che tiêu đề khi cuộn bằng anchor link */
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. THANH ĐIỀU HƯỚNG (HEADER)
+   -------------------------------------------------------------------------- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.logo-badge {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #ffffff;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 4px rgba(190, 18, 60, 0.3);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.925rem;
+  font-weight: 600;
+  transition: var(--transition);
+  padding: 0.35rem 0;
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary);
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+nav a:hover {
+  color: var(--primary);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* 4. HERO SECTION (MỞ ĐẦU TRANG)
+   -------------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 4.5rem 1.5rem 2.5rem;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.825rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: 50px;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+}
+
+.hero p {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* 5. KHỐI THỐNG KÊ NHANH (STATS GRID)
+   -------------------------------------------------------------------------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 1.5rem auto 3.5rem;
+  padding: 0 1.5rem;
+}
+
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.35rem 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-border);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  font-feature-settings: "tnum";
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* 6. BỐ CỤC KHU VỰC NỘI DUNG (MAIN CONTENT)
+   -------------------------------------------------------------------------- */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+section {
+  margin-bottom: 4.5rem;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-subtitle {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.section-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+/* 7. BƯỚC THỰC HIỆN (STEP CARDS)
+   -------------------------------------------------------------------------- */
+.steps-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.step-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  transition: var(--transition);
+}
+
+.step-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+}
+
+.step-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+  font-weight: 800;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.6rem;
+}
+
+.step-content ul {
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.step-content li {
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
+.step-content li::marker {
+  color: var(--primary);
+}
+
+/* 8. LƯỚI 09 NHÓM THÔNG TIN (INFO GRID)
+   -------------------------------------------------------------------------- */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.15rem;
+}
+
+.info-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-md);
+}
+
+.info-num {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info-title {
+  font-weight: 700;
+  font-size: 0.975rem;
+  color: var(--text-main);
+}
+
+/* 9. THẺ VAI TRÒ & TRẠNG THÁI (STATUS & ROLE CARDS)
+   -------------------------------------------------------------------------- */
+.cards-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+
+.status-card, .role-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.status-card:hover, .role-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.status-tag {
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.775rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.85rem;
+}
+
+.status-tag.not-clean {
+  background-color: var(--status-not-clean-bg);
+  color: var(--status-not-clean-text);
+}
+
+.status-tag.cleaning {
+  background-color: var(--status-cleaning-bg);
+  color: var(--status-cleaning-text);
+}
+
+.status-tag.cleaned {
+  background-color: var(--status-cleaned-bg);
+  color: var(--status-cleaned-text);
+}
+
+.status-card h3, .role-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text-main);
+}
+
+.status-card p, .role-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* 10. CHÂN TRANG (FOOTER)
+   -------------------------------------------------------------------------- */
+footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--bg-card);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* 11. RESPONSIVE DESIGN (TƯƠNG THÍCH MỌI MÀN HÌNH)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .step-card {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.35rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  nav {
+    display: none; /* Ẩn bớt menu trên di động siêu nhỏ để tránh vỡ giao diện */
+  }
+
+  .hero {
+    padding-top: 2.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
