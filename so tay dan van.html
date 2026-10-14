@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ tay Dân vận</title>
+    <!-- Font chữ Google Inter hiện đại -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== CẤU HÌNH BIẾN & TỔNG QUAN ==================== */
+        :root {
+            --primary: #be123c;       /* Đỏ cờ / Đỏ đô truyền thống */
+            --primary-hover: #9f1239;
+            --accent: #d97706;        /* Vàng kim */
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* ==================== THANH ĐIỀU HƯỚNG (HEADER) ==================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .logo-badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* ==================== KHU VỰC HERO (MỞ ĐẦU) ==================== */
+        .hero {
+            text-align: center;
+            padding: 4rem 1.5rem 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: #ffe4e6;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: #0f172a;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* Thống kê nhanh */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.25rem 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ==================== BỐ CỤC CHUNG VÙNG NỘI DUNG ==================== */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 5rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 1.75rem;
+        }
+
+        .section-subtitle {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* ==================== THẺ CÁC BƯỚC THỰC HIỆN (STEP CARDS) ==================== */
+        .steps-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .step-badge {
+            background: #fff1f2;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.875rem;
+            padding: 0.5rem 0.875rem;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content ul {
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .step-content li {
+            margin-bottom: 0.35rem;
+        }
+
+        /* ==================== DANH SÁCH LƯỚI (09 NHÓM THÔNG TIN) ==================== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .info-num {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .info-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* ==================== TRẠNG THÁI & VAI TRÒ ==================== */
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .role-card, .status-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .role-card h3, .status-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-tag.not-clean { background: #fee2e2; color: #991b1b; }
+        .status-tag.cleaning { background: #fef3c7; color: #92400e; }
+        .status-tag.cleaned { background: #dcfce7; color: #166534; }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive cho thiết bị di động */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.8rem; }
+            nav { display: none; } /* Ẩn menu điều hướng trên di động nhỏ */
+            .step-card { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <header>
+        <div class="nav-container">
+            <a href="#top" class="logo">
+                <span class="logo-badge">SDV</span>
+                Sổ Tay Dân vận
+            </a>
+            <nav>
+                <a href="#tong-quan">Tổng quan</a>
+                <a href="#giai-doan-1">Mô hình</a>
+                <a href="#giai-doan-2">Tập thể</a>
+                <a href="#nhom-thong-tin">Cá nhân</a>
+                <a href="#vai-tro">Phản ánh - Kiến nghị</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- TRANG MỞ ĐẦU (HERO SECTION) -->
+    <div class="hero" id="top">
+        <span class="hero-tag">Công tác Dân vân phường Bình Long</span>
+        <h1>Dân vận khéo năm 2026 </h1>
+        <p>"Dân vận khéo” năm 2026 gắn với Chương trình 7 “Người tốt, việc tốt, điển hình tiên tiến”; đợt thi đua đặc biệt 500 ngày đêm “Đoàn kết - Kỷ cương - Hiệu quả Bứt phá” theo Nghị quyết số 05-NQ/TU, ngày 01/5/2026 của Ban Chấp hành Đảng bộ thành phố; học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh - Chuyên đề năm 2026 và nhiệm vụ chính trị, chương trình công tác phù hợp tình hình thực tiễn của cơ quan, đơn vị; thường xuyên theo dõi, đánh giá kết quả thực hiện các mô hình, điển hình “Dân vận khéo” đã xây dựng để kịp thời biểu dương và làm cơ sở đề nghị cấp thành phố công nhận cũng như biểu dương, khen thưởng cuối năm 2026.</p>
+    </div>
+
+    <!-- KHỐI THỐNG KÊ NHANH -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">58</div>
+            <div class="stat-label">Tổng số mô hình</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">31</div>
+            <div class="stat-label">Tập thể</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">27</div>
+            <div class="stat-label">Cá nhân</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">30</div>
+            <div class="stat-label">Đang triển khai</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Khó khăn</div>
+        </div>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main>
+
+        <!-- MÔ HÌNH -->
+        <section id="giai-doan-1">
+            <div class="section-header">
+                <span class="section-subtitle">MÔ HÌNH ĐĂNG KÝ THAM GIA</span>
+                <h2 class="section-title">Có 31 Tập thể và 27 Cá nhân</h2>
+            </div>
+
+            <div class="steps-wrapper">
+                <article class="step-card">
+                    <span class="step-badge">Lĩnh vực Kinh tế</span>
+                    <div class="step-content">
+                        <h3>01 mô hình</h3>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Lĩnh vực Văn hóa - Xã hội</span>
+                    <div class="step-content">
+                        <h3>51 mô hình</h3>
+                                            </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Lĩnh vực Quốc phòng - An ninh</span>
+                    <div class="step-content">
+                        <h3>04 mô hình</h3>
+                        
+                    </div>
+                </article>
+ 	        <article class="step-card">
+                    <span class="step-badge">Lĩnh vực Xây dựng hệ thống chính trị</span>
+                    <div class="step-content">
+                        <h3>02 mô hình</h3>
+                                            </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- TẬP THỂ -->
+        <section id="giai-doan-2">
+            <div class="section-header">
+                <span class="section-subtitle">Mô hình tập thể tham gia</span>
+                <h2 class="section-title">CHI TIẾT SỐ LƯỢNG CÁC THẬP THỂ ĐĂNG KÝ THAM GIA</h2>
+            </div>
+
+            <div class="steps-wrapper">
+                <article class="step-card">
+                    <span class="step-badge">Hội Nông dân phường</span>
+                    <div class="step-content">
+                        <h3>Mô hình tổ hội nghề nghiệp trồng sầu riêng an toàn</h3>
+                        <ul>
+                            <li>Tham gia thực hành sản xuất nông nghiệp tốt (VietGAP) trên cây sầu riêng.</li>
+                            <li>Từ tháng 01/2026 đến tháng 12/2026.</li>
+				<li>Mô hình mang tính khả thi, năng suất thu hoạch cao, giá cả ổn định, không đòi hỏi nhiều công chăm sóc, sau khi trừ chi phí mang lại hiệu quả kinh tế cao cho các hộ trồng sầu riêng.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Chi bộ Trung tâm Dịch vụ tổng hợp</span>
+                    <div class="step-content">
+                        <h3>Số hóa địa chỉ đỏ các khu di tích lịch sử trên địa bàn phường Bình Long</h3>
+                        <ul>
+                            <li>Phát huy hiệu quả giá trị di tích lịch sử, nâng cao chất lượng công tác giáo dục truyền thống và tăng cường vai trò quản lý nhà nước về văn hóa ở cơ sở từ nguồn xã hội hóa.</li>
+				<li>Từ tháng 01 đến tháng 12/2026.</li>
+				<li>Nâng cao nhận thức của học sinh, đoàn viên, thanh thiếu niên và Nhân dân về lịch sử địa phương, truyền thống cách mạng.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Hội Liên hiệp Phụ nữ phường Bình Long</span>
+                    <div class="step-content">
+                        <h3>Đường cờ kiểu mẫu</h3>
+                        <ul>
+                            <li>Nhằm tuyên truyền các ngày lễ lớn, sự kiện chính trị của đất nước, địa phương. Tạo cảnh quan khang trang, sạch đẹp, văn minh. Nâng cao ý thức người dân trong việc treo cờ Tổ quốc đúng quy định, góp phần xây dựng tuyến đường sáng, xanh, sạch, đẹp, an toàn.</li>
+				<li>Từ 01/3 đến 30/4/2026.</li>
+				<li>Chiều dài tuyến đường là 500m, cắm 40 cây cờ, vận động hội viên phụ nữ tại chi hội phụ nữ khu phố Xa Xam 2 và Nhân dân dọn dẹp, vệ sinh tuyến đường xanh, sạch, đẹp.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Hội Liên hiệp Phụ nữ phường Bình Long</span>
+                    <div class="step-content">
+                        <h3>CLB Phụ nữ số, khu phố An Bình</h3>
+                        <ul>
+                            <li>Tổ chức sinh hoạt, hướng dẫn hội viên phụ nữ sử dụng thiết bị thông minh, mạng xã hội an toàn, sử dụng tốt các ứng dụng phục vụ đời sống; Hướng dẫn, hỗ trợ hội viên tiếp cận, sử dụng dịch vụ công trực tuyến, thanh toán không dùng tiền mặt và các nền tảng số của địa phương.</li>
+                            <li>Từ 01/3 đến 31/12/2026.</li>
+				<li>Thành lập, duy trì hoạt động hiệu quả CLB Phụ nữ số khu phố An Bình với sự tham gia của hội viên hội phụ nữ. Góp phần nâng cao nhận thức, kỹ năng ứng dụng công nghệ thông tin cho hội viên phụ nữ, lan tỏa phong trào chuyển đổi số trong cộng đồng dân cư.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="step-card">
+                    <span class="step-badge">Phòng Văn hóa – Xã hội phường</span>
+                    <div class="step-content">
+                        <h3>Phát huy hiệu quả công tác dân vận thông qua nền tảng Zalo OA trong tuyên truyền và tiếp nhận phản ánh của Nhân dân</h3>
+                        <ul>
+                            <li>Mô hình nhằm phát huy vai trò của Phòng Văn hóa -   Xã hội trong công tác tuyên truyền, vận động Nhân  dân  thông qua nền tảng Zalo OA của phường Bình Long, đồng thời tiếp nhận, tổng hợp và phản hồi kịp thời các ý kiến, phản ánh, kiến nghị của Nhân dân liên quan đến các lĩnh vực văn hóa, xã hội, giáo dục, y tế, an sinh xã hội.</li>
+				<li>Từ tháng 01/2026 đến tháng 12/2026.</li>
+				<li>Nâng cao hiệu quả công tác tuyên truyền, tăng cường sự tham gia và giám sát của Nhân dân; kịp thời tiếp nhận, xử lý phản ánh; góp phần xây dựng chính quyền thân thiện, gần dân, vì Nhân dân phục vụ.</li>
+                        </ul>
+                    </div>
+                </article>
+<article class="step-card">
+                    <span class="step-badge">Trung tâm Phục vụ hành chính công</span>
+                    <div class="step-content">
+                        <h3>Ngày không hẹn</h3>
+                        <ul>
+                            <li>Tổ chức “Ngày không hẹn” định kỳ, trùng với lịch tiếp công dân hằng tuần của lãnh đạo UBND phường. Trong ngày này, Trung tâm Phục vụ hành chính công phối hợp với Văn phòng HĐND - UBND phường bố trí đầy đủ cán bộ, công chức có thẩm quyền để tiếp nhận, giải quyết ngay trong ngày các thủ tục hành chính đủ điều kiện thuộc lĩnh vực Tư pháp - Hộ tịch, không hẹn trả kết quả sang ngày hôm sau. Ưu tiên giải quyết các thủ tục đơn giản, người dân cần kết quả sớm để thực hiện thủ tục liên quan như: chứng thực bản sao từ bản chính; chứng thực chữ ký, chữ ký người dịch; cấp bản sao từ sổ gốc; đăng ký khai tử; đăng ký kết hôn… Đồng thời tăng cường hướng dẫn, hỗ trợ người dân hoàn thiện hồ sơ tại chỗ, bảo đảm nhanh chóng, thuận tiện, đúng quy định.</li>
+				<li>Từ ngày 01/3/2026 đến ngày 31/12/2026.</li>
+				<li>Giảm tình trạng chờ đợi của người dân khi thực hiện thủ tục hành chính; nâng cao sự hài lòng và niềm tin của Nhân dân đối với cơ quan hành chính nhà nước; góp phần xây dựng đội ngũ cán bộ, công chức tận tụy, trách nhiệm, gần dân, hiểu dân.</li>
+                        </ul>
+                    </div>
+                </article>
+<article class="step-card">
+                    <span class="step-badge">Chi bộ Văn phòng Đảng ủy – Đảng ủy các cơ quan Đảng</span>
+                    <div class="step-content">
+                        <h3>Sổ tay dân vận số của phường</h3>
+                        <ul>
+                            <li>Xây dựng tệp tin (file)/sổ điện tử (hoặc bản giấy song song) Dân vận khéo.</li>
+				<li>Từ Quý I/2026 và đến hết 2026.</li>
+				<li>Tạo ra công cụ dùng chung để kịp thời nắm bắt, theo dõi tình hình, tình huống phát sinh và có hướng xử lý hiệu quả.</li>
+                        </ul>
+                    </div>
+                </article>
+
+
+
+            </div>
+        </section>
+
+        <!-- 09 NHÓM THÔNG TIN -->
+        <section id="nhom-thong-tin">
+            <div class="section-header">
+                <span class="section-subtitle">03 — Phạm vi kiểm tra</span>
+                <h2 class="section-title">09 Nhóm thông tin cần rà soát</h2>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card"><span class="info-num">01</span><span class="info-title">Thông tin cơ bản</span></div>
+                <div class="info-card"><span class="info-num">02</span><span class="info-title">Quá trình công tác</span></div>
+                <div class="info-card"><span class="info-num">03</span><span class="info-title">Đào tạo, bồi dưỡng</span></div>
+                <div class="info-card"><span class="info-num">04</span><span class="info-title">Huy hiệu Đảng</span></div>
+                <div class="info-card"><span class="info-num">05</span><span class="info-title">Khen thưởng, kỷ luật</span></div>
+                <div class="info-card"><span class="info-num">06</span><span class="info-title">Đặc điểm lịch sử</span></div>
+                <div class="info-card"><span class="info-num">07</span><span class="info-title">Đi nước ngoài</span></div>
+                <div class="info-card"><span class="info-num">08</span><span class="info-title">Quan hệ gia đình</span></div>
+                <div class="info-card"><span class="info-num">09</span><span class="info-title">Hoàn cảnh kinh tế</span></div>
+            </div>
+        </section>
+
+        <!-- VAI TRÒ & TRẠNG THÁI -->
+        <section id="vai-tro">
+            <div class="section-header">
+                <span class="section-subtitle">04 — Trách nhiệm & Hệ thống</span>
+                <h2 class="section-title">Trạng thái dữ liệu & Phân vai trò</h2>
+            </div>
+
+            <div class="cards-grid-3">
+                <div class="status-card">
+                    <span class="status-tag not-clean">Mức 1</span>
+                    <h3>Chưa làm sạch</h3>
+                    <p>Hồ sơ chưa được rà soát hoặc chưa gửi cập nhật. Chi ủy có thể hỗ trợ cập nhật hộ trên hệ thống.</p>
+                </div>
+
+                <div class="status-card">
+                    <span class="status-tag cleaning">Mức 2</span>
+                    <h3>Đang làm sạch</h3>
+                    <p>Đảng viên đã nộp hồ sơ, đang trong quá trình Chi ủy xác nhận hoặc Đảng ủy phê duyệt.</p>
+                </div>
+
+                <div class="status-card">
+                    <span class="status-tag cleaned">Mức 3</span>
+                    <h3>Đã làm sạch</h3>
+                    <p>Thông tin đã được phê duyệt đầy đủ qua các cấp và được cập nhật chính thức vào hệ thống.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Sổ tay đảng viên điện tử — Quy trình rà soát và chuẩn hoá dữ liệu đảng viên.</p>
+    </footer>
+
+</body>
+</html>
